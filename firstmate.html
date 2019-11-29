@@ -1,0 +1,42 @@
+<html>
+<head>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
+</head>
+ <body>
+  <script>
+  var i = 1;
+  var socket = io.connect();
+ 
+      socket.on('date', function(data){
+          $('#date').text("Date & Time: "+data.date);
+      });
+      socket.on('temp', function(data){
+          $('#temp').text("Temperature: "+data.temp);
+      });
+      socket.on('humidity', function(data){
+          $('#humidity').text("Humidity: "+data.humidity);
+          ++i;
+          $('#id').text("Sequence#: "+i);
+      });
+
+  $(document).ready(function(){
+    $('#text').keypress(function(e){
+      socket.emit('client_data', {'letter': String.fromCharCode(e.charCode)});
+      socket.emit('client_data', {'2ndline': String.fromCharCode(e)});
+    });
+  });
+  </script>
+
+  <h1>IO Control</h1>
+  <div id="date"></div>
+  <div id="temp"></div>
+  <div id="humidity"></div>
+  <div id="id"></div>
+  <textarea id="text"></textarea>
+  <p><input type="checkbox" id="Zone1"> Zone1</p>
+  <p><input type="checkbox" id="Zone2"> Zone2</p>
+  <p><input type="checkbox" id="Zone3"> Zone3</p>
+  <p><input type="checkbox" id="Zone4"> Zone4</p>
+ </body>
+</html>

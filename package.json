@@ -1,0 +1,31 @@
+{
+  "name": "firstmate",
+  "version": "1.0.0",
+  "description": "Yacht Control Software",
+  "main": "firstmate.js",
+  "dependencies": {
+    "node-dht-sensor": "^0.4.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fsi-mdg/firstmate.git"
+  },
+  "keywords": [
+    "socket.io",
+    "dht",
+    "pi",
+    "yacht",
+    "control"
+  ],
+  "author": "Mitchell D. Gram",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fsi-mdg/firstmate/issues"
+  },
+  "homepage": "https://github.com/fsi-mdg/firstmate#readme"
+}
