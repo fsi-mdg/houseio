@@ -4,13 +4,14 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
 </head>
  <body>
-  <h1>IO Control</h1>
+  <font face="verdana">
+  <h1>FirstMate v1.00</h1>
   <div id="date"></div>
   <div id="temp"></div>
   <div id="humidity"></div>
   <div id="id"></div>
-  <textarea id="text"></textarea>
-  <h2>Toggle Switch</h2>
+<!--  <textarea id="text"></textarea> -->
+  <h2>Zone Control:</h2>
     Zone1<br>
       <label class="switch">
       <input type="checkbox" id="Zone1">
@@ -37,39 +38,73 @@
     <br>
 
   <script>
-console.log("boom");
    var i = 1;
    var socket = io.connect();
  
        socket.on('date', function(data){
            $('#date').text("Date & Time: "+data.date);
-           console.log("Date & Time: "+data.date);
+//           console.log("Date & Time: "+data.date);
        });
        socket.on('temp', function(data){
            $('#temp').text("Temperature: "+data.temp);
-           console.log("tmp:"+data.temp); 
+//           console.log("tmp:"+data.temp); 
        });
        socket.on('humidity', function(data){
            $('#humidity').text("Humidity: "+data.humidity);
-           console.log("Humidity:"+data.humidity);
+//           console.log("Humidity:"+data.humidity);
            ++i;
            $('#id').text("Sequence#: "+i);
        });
+
        socket.on('Zone1init', function(data) {
-           console.log("Zone1init Checked Status = " + JSON.stringify(data.Zone1init));
-           var z1state = JSON.stringify(data.Zone1init);
-           console.log(z1state);
+//           console.log("Zone1init Checked Status = " + JSON.stringify(data.Zone1init));
            switch (data.Zone1init) { 
              case 1:
                document.getElementById("Zone1").checked = true;
-               console.log("Set Z1 Checked");
+//               console.log("Set Z1 Checked");
                break;
              case 0:        
                document.getElementById("Zone1").checked = false;
-               console.log("Set Z1 Unchecked");
+//               console.log("Set Z1 Unchecked");
                break;
              default:
-               console.log("can't figurei out");
+               console.log("Debug: Z1 Invalid Switch Value");
+           }        
+       });          
+       socket.on('Zone2init', function(data) {
+           switch (data.Zone2init) { 
+             case 1:
+               document.getElementById("Zone2").checked = true;
+               break;
+             case 0:        
+               document.getElementById("Zone2").checked = false;
+               break;
+             default:
+               console.log("Debug: Z2 Invalid Switch Value");
+           }        
+       });          
+       socket.on('Zone3init', function(data) {
+           switch (data.Zone3init) { 
+             case 1:
+               document.getElementById("Zone3").checked = true;
+               break;
+             case 0:        
+               document.getElementById("Zone3").checked = false;
+               break;
+             default:
+               console.log("Debug: Z3 Invalid Switch Value");
+           }        
+       });          
+       socket.on('Zone4init', function(data) {
+           switch (data.Zone4init) { 
+             case 1:
+               document.getElementById("Zone4").checked = true;
+               break;
+             case 0:        
+               document.getElementById("Zone4").checked = false;
+               break;
+             default:
+               console.log("Debug: Z4 Invalid Switch Value");
            }        
        });          
 
@@ -91,7 +126,6 @@ console.log("boom");
     lightbox.addEventListener("change", function() { //add event listener for when checkbox changes
       socket.emit("Zone1", Number(this.checked)); //send button status to server (as 1 or 0)
     });
-//    document.getElementbyID("Zone1").checked = true;
   });
   window.addEventListener("load", function(){ //when page loads
     var lightbox = document.getElementById("Zone2");

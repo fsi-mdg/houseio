@@ -56,24 +56,21 @@ console.log("socket.io started");
 
 var listener = io.listen(server);
 
-// socket.io 
+// socket.io
 
 listener.sockets.on('connection', function(socket){
 //send data to client
   console.log('New client has connected'+socket);
-  // Read the current Zone Switch Values from Hardware 
+  // Read the current Zone Switch Values from Hardware
   var boxvalue = Zone1.readSync()
   socket.emit('Zone1init', {'Zone1init': boxvalue});
   console.log('Zone1 Init Status: '+ boxvalue);
-  
   var boxvalue = Zone2.readSync();
   socket.emit('Zone2init', {'Zone2init': boxvalue});
   console.log('Zone2 Init Status: '+ boxvalue);
-  
   var boxvalue = Zone3.readSync();
-  socket.emit('Zone3init', {'Zone3init': Zone3.boxvalue});
+  socket.emit('Zone3init', {'Zone3init': boxvalue});
   console.log('Zone3 Init Status: '+ boxvalue);
-  
   var boxvalue = Zone4.readSync();
   socket.emit('Zone4init', {'Zone4init': boxvalue});
   console.log('Zone4 Iniit Status: '+ boxvalue);
@@ -88,6 +85,12 @@ listener.sockets.on('connection', function(socket){
     socket.emit('date', {'date': new Date()});
     var boxvalue = Zone1.readSync()
     socket.emit('Zone1init', {'Zone1init': boxvalue});
+    var boxvalue = Zone2.readSync()
+    socket.emit('Zone2init', {'Zone2init': boxvalue});
+    var boxvalue = Zone3.readSync()
+    socket.emit('Zone3init', {'Zone3init': boxvalue});
+    var boxvalue = Zone4.readSync()
+    socket.emit('Zone4init', {'Zone4init': boxvalue});
    },5000);
 
 
