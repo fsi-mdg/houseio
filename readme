@@ -14,4 +14,4 @@ Now you can cd back out (cd ..) and install the Node.js DHT module:
 
 npm install node-dht-sensor
 
-
+Add PM2 to autolaunch the Node app
