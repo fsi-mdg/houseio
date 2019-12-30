@@ -1,10 +1,15 @@
+npm install onoff
+npm install bufferutil --save-optional
+npm install utf-8-validate --save-optional
+npm install --save socket.io
+
+
 1) Install Library for DHT
 You will not find this library in your Rasp Pi's Raspbian repositories, so first you have to download it,
 
 wget http://www.airspayce.com/mikem/bcm2835/bcm2835-1.50.tar.gz
 uncompress it,
 
-tar xvf bcm2835-1.50.tar.gz
 and cd into the directory it creates, so you can build and install the library:
 
 ./configure
@@ -15,3 +20,38 @@ Now you can cd back out (cd ..) and install the Node.js DHT module:
 npm install node-dht-sensor
 
 Add PM2 to autolaunch the Node app
+
+
+
+
+\Trouble with dht sensor install on 12/29/19
+cm  houseio
+pi@raspberrypi:~/nodejs $ cd houseio
+pi@raspberrypi:~/nodejs/houseio $ npm install node-dht-sensor
+
+> node-dht-sensor@0.4.0 install /home/pi/nodejs/houseio/node_modules/node-dht-sensor
+> node-gyp configure
+
+
+> node-dht-sensor@0.4.0 postinstall /home/pi/nodejs/houseio/node_modules/node-dht-sensor
+> node-gyp build
+
+make: Entering directory '/home/pi/nodejs/houseio/node_modules/node-dht-sensor/build'
+  CC(target) Release/obj.target/nothing/../node-addon-api/src/nothing.o
+  AR(target) Release/obj.target/../node-addon-api/src/nothing.a
+  COPY Release/nothing.a
+  CC(target) Release/obj.target/node_dht_sensor/src/bcm2835/bcm2835.o
+  CXX(target) Release/obj.target/node_dht_sensor/src/node-dht-sensor.o
+  CXX(target) Release/obj.target/node_dht_sensor/src/dht-sensor.o
+  CXX(target) Release/obj.target/node_dht_sensor/src/util.o
+  SOLINK_MODULE(target) Release/obj.target/node_dht_sensor.node
+  COPY Release/node_dht_sensor.node
+make: Leaving directory '/home/pi/nodejs/houseio/node_modules/node-dht-sensor/build'
+npm WARN ws@7.2.1 requires a peer of bufferutil@^4.0.1 but none is installed. You must install peer dependencies yourself.
+npm WARN ws@7.2.1 requires a peer of utf-8-validate@^5.0.2 but none is installed. You must install peer dependencies yourself.
+
++ node-dht-sensor@0.4.0
+updated 1 package and audited 78 packages in 25.101s
+found 0 vulnerabilities
+
+pi@raspberrypi:~/nodejs/houseio $ 
