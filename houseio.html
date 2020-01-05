@@ -1,0 +1,572 @@
+<html>
+<head>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
+</head>
+ <body>
+  <font face="verdana">
+  <h1>HouseIO v1.00</h1>
+  <div id="date"></div>
+  <div id="temp"></div>
+  <div id="humidity"></div>
+  <div id="id"></div>
+<!--  <textarea id="text"></textarea> -->
+  <h2>Porch Light Control:</h2>
+    Zone1<br>
+      <label class="switch">
+      <input type="checkbox" id="Zone1">
+      <span class="slider round"></span>
+      </label>
+    <br>
+    Zone2<br>
+      <label class="switch">
+      <input type="checkbox" id="Zone2">
+      <span class="slider round"></span>
+      </label>
+    <br>
+    Zone3<br>
+      <label class="switch">
+      <input type="checkbox" id="Zone3">
+      <span class="slider round"></span>
+      </label>
+    <br>
+    Zone4<br>
+      <label class="switch">
+      <input type="checkbox" id="Zone4">
+      <span class="slider round"></span>
+      </label>
+    <br>
+    Zone5<br>
+      <label class="switch">
+      <input type="checkbox" id="Zone5">
+      <span class="slider round"></span>
+      </label>
+    <br>
+    Zone6<br>
+      <label class="switch">
+      <input type="checkbox" id="Zone6">
+      <span class="slider round"></span>
+      </label>
+    <br>
+    Zone7<br>
+      <label class="switch">
+      <input type="checkbox" id="Zone7">
+      <span class="slider round"></span>
+      </label>
+    <br>
+    Zone8<br>
+      <label class="switch">
+      <input type="checkbox" id="Zone8">
+      <span class="slider round"></span>
+      </label>
+    <br>
+    Zone9<br>
+      <label class="switch">
+      <input type="checkbox" id="Zone9">
+      <span class="slider round"></span>
+      </label>
+    <br>
+    Zone10<br>
+      <label class="switch">
+      <input type="checkbox" id="Zone10">
+      <span class="slider round"></span>
+      </label>
+    <br>
+    Zone11<br>
+      <label class="switch">
+      <input type="checkbox" id="Zone11">
+      <span class="slider round"></span>
+      </label>
+    <br>
+    Zone12<br>
+      <label class="switch">
+      <input type="checkbox" id="Zone12">
+      <span class="slider round"></span>
+      </label>
+    <br>
+    Zone13<br>
+      <label class="switch">
+      <input type="checkbox" id="Zone13">
+      <span class="slider round"></span>
+      </label>
+    <br>
+    Zone14<br>
+      <label class="switch">
+      <input type="checkbox" id="Zone14">
+      <span class="slider round"></span>
+      </label>
+    <br>
+    Zone15<br>
+      <label class="switch">
+      <input type="checkbox" id="Zone15">
+      <span class="slider round"></span>
+      </label>
+    <br>
+    Zone16<br>
+      <label class="switch">
+      <input type="checkbox" id="Zone16">
+      <span class="slider round"></span>
+      </label>
+    <br>
+
+  <script>
+   var i = 1;
+   var socket = io.connect();
+ 
+       socket.on('date', function(data){
+           $('#date').text("Date & Time: "+data.date);
+//           console.log("Date & Time: "+data.date);
+       });
+       socket.on('temp', function(data){
+           $('#temp').text("Temperature: "+data.temp);
+//           console.log("tmp:"+data.temp); 
+       });
+       socket.on('humidity', function(data){
+           $('#humidity').text("Humidity: "+data.humidity);
+//           console.log("Humidity:"+data.humidity);
+           ++i;
+           $('#id').text("Sequence#: "+i);
+       });
+
+       socket.on('Zone1init', function(data) {
+//           console.log("Zone1init Checked Status = " + JSON.stringify(data.Zone1init));
+           switch (data.Zone1init) { 
+             case 1:
+               document.getElementById("Zone1").checked = true;
+//               console.log("Set Z1 Checked");
+               break;
+             case 0:        
+               document.getElementById("Zone1").checked = false;
+//               console.log("Set Z1 Unchecked");
+               break;
+             default:
+               console.log("Debug: Z1 Invalid Switch Value");
+           }        
+       });          
+       socket.on('Zone2init', function(data) {
+           switch (data.Zone2init) { 
+             case 1:
+               document.getElementById("Zone2").checked = true;
+               break;
+             case 0:        
+               document.getElementById("Zone2").checked = false;
+               break;
+             default:
+               console.log("Debug: Z2 Invalid Switch Value");
+           }        
+       });          
+       socket.on('Zone3init', function(data) {
+           switch (data.Zone3init) { 
+             case 1:
+               document.getElementById("Zone3").checked = true;
+               break;
+             case 0:        
+               document.getElementById("Zone3").checked = false;
+               break;
+             default:
+               console.log("Debug: Z3 Invalid Switch Value");
+           }        
+       });          
+       socket.on('Zone4init', function(data) {
+           switch (data.Zone4init) { 
+             case 1:
+               document.getElementById("Zone4").checked = true;
+               break;
+             case 0:        
+               document.getElementById("Zone4").checked = false;
+               break;
+             default:
+               console.log("Debug: Z4 Invalid Switch Value");
+           }        
+       });          
+       socket.on('Zone5init', function(data) {
+           switch (data.Zone5init) { 
+             case 1:
+               document.getElementById("Zone5").checked = true;
+               break;
+             case 0:        
+               document.getElementById("Zone5").checked = false;
+               break;
+             default:
+               console.log("Debug: Z5 Invalid Switch Value");
+           }        
+       });          
+       socket.on('Zone6init', function(data) {
+           switch (data.Zone6init) { 
+             case 1:
+               document.getElementById("Zone6").checked = true;
+               break;
+             case 0:        
+               document.getElementById("Zone6").checked = false;
+               break;
+             default:
+               console.log("Debug: Z6 Invalid Switch Value");
+           }        
+       });          
+       socket.on('Zone7init', function(data) {
+           switch (data.Zone7init) { 
+             case 1:
+               document.getElementById("Zone7").checked = true;
+               break;
+             case 0:        
+               document.getElementById("Zone7").checked = false;
+               break;
+             default:
+               console.log("Debug: Z7 Invalid Switch Value");
+           }        
+       });          
+       socket.on('Zone8init', function(data) {
+           switch (data.Zone8init) { 
+             case 1:
+               document.getElementById("Zone8").checked = true;
+               break;
+             case 0:        
+               document.getElementById("Zone8").checked = false;
+               break;
+             default:
+               console.log("Debug: Z8 Invalid Switch Value");
+           }        
+       });          
+       socket.on('Zone9init', function(data) {
+           switch (data.Zone9init) { 
+             case 1:
+               document.getElementById("Zone9").checked = true;
+               break;
+             case 0:        
+               document.getElementById("Zone9").checked = false;
+               break;
+             default:
+               console.log("Debug: Z9 Invalid Switch Value");
+           }        
+       });          
+       socket.on('Zone10init', function(data) {
+           switch (data.Zone10init) { 
+             case 1:
+               document.getElementById("Zone10").checked = true;
+               break;
+             case 0:        
+               document.getElementById("Zone10").checked = false;
+               break;
+             default:
+               console.log("Debug: Z10 Invalid Switch Value");
+           }        
+       });          
+       socket.on('Zone11init', function(data) {
+           switch (data.Zone11init) { 
+             case 1:
+               document.getElementById("Zone11").checked = true;
+               break;
+             case 0:        
+               document.getElementById("Zone11").checked = false;
+               break;
+             default:
+               console.log("Debug: Z11 Invalid Switch Value");
+           }        
+       });          
+       socket.on('Zone12init', function(data) {
+           switch (data.Zone12init) { 
+             case 1:
+               document.getElementById("Zone12").checked = true;
+               break;
+             case 0:        
+               document.getElementById("Zone12").checked = false;
+               break;
+             default:
+               console.log("Debug: Z12 Invalid Switch Value");
+           }        
+       });          
+       socket.on('Zone13init', function(data) {
+           switch (data.Zone13init) { 
+             case 1:
+               document.getElementById("Zone13").checked = true;
+               break;
+             case 0:        
+               document.getElementById("Zone13").checked = false;
+               break;
+             default:
+               console.log("Debug: Z13 Invalid Switch Value");
+           }        
+       });          
+       socket.on('Zone14init', function(data) {
+           switch (data.Zone14init) { 
+             case 1:
+               document.getElementById("Zone14").checked = true;
+               break;
+             case 0:        
+               document.getElementById("Zone14").checked = false;
+               break;
+             default:
+               console.log("Debug: Z14 Invalid Switch Value");
+           }        
+       });          
+       socket.on('Zone15init', function(data) {
+           switch (data.Zone15init) { 
+             case 1:
+               document.getElementById("Zone15").checked = true;
+               break;
+             case 0:        
+               document.getElementById("Zone15").checked = false;
+               break;
+             default:
+               console.log("Debug: Z15 Invalid Switch Value");
+           }        
+       });          
+       socket.on('Zone16init', function(data) {
+           switch (data.Zone16init) { 
+             case 1:
+               document.getElementById("Zone16").checked = true;
+               break;
+             case 0:        
+               document.getElementById("Zone16").checked = false;
+               break;
+             default:
+               console.log("Debug: Z16 Invalid Switch Value");
+           }        
+       });          
+
+   $(document).ready(function(){
+     $('#text').keypress(function(e){
+       socket.emit('client_data', {'letter': String.fromCharCode(e.charCode)});
+       socket.emit('client_data', {'2ndline': String.fromCharCode(e)});
+     });
+   });
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script> <!-- include socket.io client side script -->
+-->
+  </script>
+  <script>
+  var socket = io(); //load socket.io-client and connect to the host that serves the page
+
+ //When Page Loads add Event Listeners  for Zone toggles 
+  window.addEventListener("load", function(){ //when page loads
+    var lightbox = document.getElementById("Zone1");
+    lightbox.addEventListener("change", function() { //add event listener for when checkbox changes
+      socket.emit("Zone1", Number(this.checked)); //send button status to server (as 1 or 0)
+    });
+  });
+  window.addEventListener("load", function(){ //when page loads
+    var lightbox = document.getElementById("Zone2");
+    lightbox.addEventListener("change", function() { //add event listener for when checkbox changes
+      socket.emit("Zone2", Number(this.checked)); //send button status to server (as 1 or 0)
+    });
+  });
+  window.addEventListener("load", function(){ //when page loads
+    var lightbox = document.getElementById("Zone3");
+    lightbox.addEventListener("change", function() { //add event listener for when checkbox changes
+      socket.emit("Zone3", Number(this.checked)); //send button status to server (as 1 or 0)
+    });
+  });
+  window.addEventListener("load", function(){ //when page loads
+    var lightbox = document.getElementById("Zone4");
+    lightbox.addEventListener("change", function() { //add event listener for when checkbox changes
+      socket.emit("Zone4", Number(this.checked)); //send button status to server (as 1 or 0)
+    });
+  });
+  window.addEventListener("load", function(){ //when page loads
+    var lightbox = document.getElementById("Zone5");
+    lightbox.addEventListener("change", function() { //add event listener for when checkbox changes
+      socket.emit("Zone5", Number(this.checked)); //send button status to server (as 1 or 0)
+    });
+  });
+  window.addEventListener("load", function(){ //when page loads
+    var lightbox = document.getElementById("Zone6");
+    lightbox.addEventListener("change", function() { //add event listener for when checkbox changes
+      socket.emit("Zone6", Number(this.checked)); //send button status to server (as 1 or 0)
+    });
+  });
+  window.addEventListener("load", function(){ //when page loads
+    var lightbox = document.getElementById("Zone7");
+    lightbox.addEventListener("change", function() { //add event listener for when checkbox changes
+      socket.emit("Zone7", Number(this.checked)); //send button status to server (as 1 or 0)
+    });
+  });
+  window.addEventListener("load", function(){ //when page loads
+    var lightbox = document.getElementById("Zone8");
+    lightbox.addEventListener("change", function() { //add event listener for when checkbox changes
+      socket.emit("Zone8", Number(this.checked)); //send button status to server (as 1 or 0)
+    });
+  });
+  window.addEventListener("load", function(){ //when page loads
+    var lightbox = document.getElementById("Zone9");
+    lightbox.addEventListener("change", function() { //add event listener for when checkbox changes
+      socket.emit("Zone9", Number(this.checked)); //send button status to server (as 1 or 0)
+    });
+  });
+  window.addEventListener("load", function(){ //when page loads
+    var lightbox = document.getElementById("Zone10");
+    lightbox.addEventListener("change", function() { //add event listener for when checkbox changes
+      socket.emit("Zone10", Number(this.checked)); //send button status to server (as 1 or 0)
+    });
+  });
+  window.addEventListener("load", function(){ //when page loads
+    var lightbox = document.getElementById("Zone11");
+    lightbox.addEventListener("change", function() { //add event listener for when checkbox changes
+      socket.emit("Zone11", Number(this.checked)); //send button status to server (as 1 or 0)
+    });
+  });
+  window.addEventListener("load", function(){ //when page loads
+    var lightbox = document.getElementById("Zone12");
+    lightbox.addEventListener("change", function() { //add event listener for when checkbox changes
+      socket.emit("Zone12", Number(this.checked)); //send button status to server (as 1 or 0)
+    });
+  });
+  window.addEventListener("load", function(){ //when page loads
+    var lightbox = document.getElementById("Zone13");
+    lightbox.addEventListener("change", function() { //add event listener for when checkbox changes
+      socket.emit("Zone13", Number(this.checked)); //send button status to server (as 1 or 0)
+    });
+  });
+  window.addEventListener("load", function(){ //when page loads
+    var lightbox = document.getElementById("Zone14");
+    lightbox.addEventListener("change", function() { //add event listener for when checkbox changes
+      socket.emit("Zone14", Number(this.checked)); //send button status to server (as 1 or 0)
+    });
+  });
+  window.addEventListener("load", function(){ //when page loads
+    var lightbox = document.getElementById("Zone15");
+    lightbox.addEventListener("change", function() { //add event listener for when checkbox changes
+      socket.emit("Zone15", Number(this.checked)); //send button status to server (as 1 or 0)
+    });
+  });
+  window.addEventListener("load", function(){ //when page loads
+    var lightbox = document.getElementById("Zone16");
+    lightbox.addEventListener("change", function() { //add event listener for when checkbox changes
+      socket.emit("Zone16", Number(this.checked)); //send button status to server (as 1 or 0)
+    });
+  });
+
+// Listine for socket.on messages from Server
+
+  socket.on('Zone1', function (data) { //get button status from client
+    document.getElementById("Zone1").checked = data; //change checkbox according to push button on Raspberry Pi
+    socket.emit("Zone1", data); //send push button status to back to server
+  });
+  socket.on('Zone2', function (data) { //get button status from client
+    document.getElementById("Zone2").checked = data; //change checkbox according to push button on Raspberry Pi
+    socket.emit("Zone2", data); //send push button status to back to server
+  });
+  socket.on('Zone3', function (data) { //get button status from client
+    document.getElementById("Zone3").checked = data; //change checkbox according to push button on Raspberry Pi
+    socket.emit("Zone3", data); //send push button status to back to server
+  });
+  socket.on('Zone4', function (data) { //get button status from client
+    document.getElementById("Zone4").checked = data; //change checkbox according to push button on Raspberry Pi
+    socket.emit("Zone4", data); //send push button status to back to server
+  });
+  socket.on('Zone5', function (data) { //get button status from client
+    document.getElementById("Zone5").checked = data; //change checkbox according to push button on Raspberry Pi
+    socket.emit("Zone5", data); //send push button status to back to server
+  });
+  socket.on('Zone6', function (data) { //get button status from client
+    document.getElementById("Zone6").checked = data; //change checkbox according to push button on Raspberry Pi
+    socket.emit("Zone6", data); //send push button status to back to server
+  });
+  socket.on('Zone7', function (data) { //get button status from client
+    document.getElementById("Zone7").checked = data; //change checkbox according to push button on Raspberry Pi
+    socket.emit("Zone7", data); //send push button status to back to server
+  });
+  socket.on('Zone8', function (data) { //get button status from client
+    document.getElementById("Zone8").checked = data; //change checkbox according to push button on Raspberry Pi
+    socket.emit("Zone8", data); //send push button status to back to server
+  });
+  socket.on('Zone9', function (data) { //get button status from client
+    document.getElementById("Zone9").checked = data; //change checkbox according to push button on Raspberry Pi
+    socket.emit("Zone9", data); //send push button status to back to server
+  });
+  socket.on('Zone10', function (data) { //get button status from client
+    document.getElementById("Zone10").checked = data; //change checkbox according to push button on Raspberry Pi
+    socket.emit("Zone10", data); //send push button status to back to server
+  });
+  socket.on('Zone11', function (data) { //get button status from client
+    document.getElementById("Zone11").checked = data; //change checkbox according to push button on Raspberry Pi
+    socket.emit("Zone11", data); //send push button status to back to server
+  });
+  socket.on('Zone12', function (data) { //get button status from client
+    document.getElementById("Zone12").checked = data; //change checkbox according to push button on Raspberry Pi
+    socket.emit("Zone12", data); //send push button status to back to server
+  });
+  socket.on('Zone13', function (data) { //get button status from client
+    document.getElementById("Zone13").checked = data; //change checkbox according to push button on Raspberry Pi
+    socket.emit("Zone13", data); //send push button status to back to server
+  });
+  socket.on('Zone14', function (data) { //get button status from client
+    document.getElementById("Zone14").checked = data; //change checkbox according to push button on Raspberry Pi
+    socket.emit("Zone14", data); //send push button status to back to server
+  });
+  socket.on('Zone15', function (data) { //get button status from client
+    document.getElementById("Zone15").checked = data; //change checkbox according to push button on Raspberry Pi
+    socket.emit("Zone15", data); //send push button status to back to server
+  });
+  socket.on('Zone16', function (data) { //get button status from client
+    document.getElementById("Zone16").checked = data; //change checkbox according to push button on Raspberry Pi
+    socket.emit("Zone16", data); //send push button status to back to server
+  });
+</script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+ .switch {
+   position: relative;
+   display: inline-block;
+   width: 60px;
+   height: 34px;
+ }
+
+ .switch input { 
+   opacity: 0;
+   width: 0;
+   height: 0;
+ }
+
+ .slider {
+   position: absolute;
+   cursor: pointer;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   background-color: #ccc;
+   -webkit-transition: .4s;
+   transition: .4s;
+ }
+
+ .slider:before {
+   position: absolute;
+   content: "";
+   height:26px;
+   width: 26px;
+   left: 4px;
+   bottom: 4px;
+   background-color: white;
+   -webkit-transition: .4s;
+   transition: .4s;
+ }
+
+ input:checked + .slider {
+   background-color: #2196F3;
+ }
+
+ input:focus + .slider {
+   box-shadow: 0 0 1px #2196F3;
+ }
+
+ input:checked + .slider:before {
+   -webkit-transform: translateX(26px);
+   -ms-transform: translateX(26px);
+   transform: translateX(26px);
+ }
+
+ /* Rounded sliders */
+ .slider.round {
+   border-radius: 34px;
+ }
+
+ .slider.round:before {
+   border-radius: 50%;
+ }
+</style>
+
+</head>
+</html>
+
+
