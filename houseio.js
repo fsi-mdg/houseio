@@ -1,35 +1,39 @@
-var http = require("http");
-var url = require('url');
-var fs = require('fs');
-var io = require('socket.io');
-var os = require('os');
-var sensorLib = require("node-dht-sensor");
-var sensorResult = sensorLib.read(22, 12);
-var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
-var Zone1 = new Gpio(4, 'out'); //use GPIO pin 4 as output
-var Zone2 = new Gpio(17, 'out'); //use GPIO pin 17 as output
-var Zone3 = new Gpio(27, 'out'); //use GPIO pin 27 as output
-var Zone4 = new Gpio(22, 'out'); //use GPIO pin 22 as output
-var Zone5 = new Gpio(5, 'out'); //use GPIO pin 5 as output
-var Zone6 = new Gpio(6, 'out'); //use GPIO pin 6 as output
-var Zone7 = new Gpio(13, 'out'); //use GPIO pin 13 as output
-var Zone8 = new Gpio(26, 'out'); //use GPIO pin 26 as output
-var Zone9 = new Gpio(16, 'out'); //use GPIO pin 16 as output
-var Zone10 = new Gpio(12, 'out'); //use GPIO pin 12 as output
-var Zone11 = new Gpio(25, 'out'); //use GPIO pin 25 as output
-var Zone12 = new Gpio(24, 'out'); //use GPIO pin 24 as output
-var Zone13 = new Gpio(23, 'out'); //use GPIO pin 23 as output
-var Zone14 = new Gpio(18, 'out'); //use GPIO pin 18 as output
-var Zone15 = new Gpio(15, 'out'); //use GPIO pin 15 as output
-var Zone16 = new Gpio(14, 'out'); //use GPIO pin 14 as output
+// declair global variables
+  var http = require("http");
+  var url = require('url');
+  var fs = require('fs');
+  var io = require('socket.io');
+  var os = require('os');
+  const { getSunrise, getSunset } = require('sunrise-sunset-js')
+  var sensorLib = require("node-dht-sensor");
+//  var sensorResult = sensorLib.read(11, 3);
+  var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
+  var Zone1 = new Gpio(4, 'out'); //use GPIO pin 4 as output
+  var Zone2 = new Gpio(17, 'out'); //use GPIO pin 17 as output
+  var Zone3 = new Gpio(27, 'out'); //use GPIO pin 27 as output
+  var Zone4 = new Gpio(22, 'out'); //use GPIO pin 22 as output
+  var Zone5 = new Gpio(5, 'out'); //use GPIO pin 5 as output
+  var Zone6 = new Gpio(6, 'out'); //use GPIO pin 6 as output
+  var Zone7 = new Gpio(13, 'out'); //use GPIO pin 13 as output
+  var Zone8 = new Gpio(26, 'out'); //use GPIO pin 26 as output
+  var Zone9 = new Gpio(16, 'out'); //use GPIO pin 16 as output
+  var Zone10 = new Gpio(12, 'out'); //use GPIO pin 12 as output
+  var Zone11 = new Gpio(25, 'out'); //use GPIO pin 25 as output
+  var Zone12 = new Gpio(24, 'out'); //use GPIO pin 24 as output
+  var Zone13 = new Gpio(23, 'out'); //use GPIO pin 23 as output
+  var Zone14 = new Gpio(18, 'out'); //use GPIO pin 18 as output
+  var Zone15 = new Gpio(15, 'out'); //use GPIO pin 15 as output
+  var Zone16 = new Gpio(14, 'out'); //use GPIO pin 14 as output
 
 // Output OS Stats
-pistats();
-// Initialize GPIO relays to off
-init_GPIO(0);
+  pistats();
 
-console.log("Starting Web Server");
-var server = http.createServer(function(request, response){
+// Initialize GPIO relays to off
+  init_GPIO(0);
+
+// Initialize Web Server
+  console.log("Starting Web Server");
+  var server = http.createServer(function(request, response){
     var path = url.parse(request.url).pathname;
 
     switch(path){
@@ -58,22 +62,20 @@ var server = http.createServer(function(request, response){
             response.end();
             break;
     }
-});
+  });
+  server.listen(8001);
+  console.log("Listening on 8001");
 
-server.listen(8001);
-console.log("Listening on 8001");
 
-io.listen(server);
-console.log("socket.io started");
+// Initialize Socket.io Listener
+  io.listen(server);
+  console.log("socket.io started");
+  var listener = io.listen(server);
 
-var listener = io.listen(server);
-
-// socket.io
-
-listener.sockets.on('connection', function(socket){
+  listener.sockets.on('connection', function(socket){
 //send data to client
   console.log('New client has connected'+socket);
-  // Read the current Zone Switch Values from Hardware
+// Read the current Zone Switch Values from Hardware
   var boxvalue = Zone1.readSync()
   socket.emit('Zone1init', {'Zone1init': boxvalue});
   console.log('Zone1 Init Status: '+ boxvalue);
@@ -123,14 +125,19 @@ listener.sockets.on('connection', function(socket){
   socket.emit('Zone16init', {'Zone16init': boxvalue});
   console.log('Zone16 Iniit Status: '+ boxvalue);
 
-
-  setInterval(function(){
-//    var sensorResult = sensorLib.read(22, 12);
+// Drive Periodic Updates to Client
+setInterval(function(){
+//    var sensorResult = sensorLib.read(11, 3);
 //    var ftemp = sensorResult.temperature*9/5+32;
 //    var humidity = sensorResult.humidity;
 //    socket.emit('temp', {'temp': ftemp.toFixed(2)});
 //    socket.emit('humidity', {'humidity': humidity.toFixed(2)});
-    socket.emit('date', {'date': new Date()});
+    var  sunset = getSunset(44.6987899,-93.4762658);
+    socket.emit('sunset', {'sunset': sunset.toLocaleString()});
+    var  sunrise = getSunrise(44.6987899,-93.4762658);
+    socket.emit('sunrise', {'sunrise': sunrise.toLocaleString()});
+    var d = new Date();
+    socket.emit('date', {'date': d.toLocaleString()});
     var boxvalue = Zone1.readSync()
     socket.emit('Zone1init', {'Zone1init': boxvalue});
     var boxvalue = Zone2.readSync()
@@ -166,7 +173,7 @@ listener.sockets.on('connection', function(socket){
    },5000);
 
 
-  //recieve client data
+//recieve client data
   socket.on('client_data', function(stuff){
   process.stdout.write(stuff.letter);
           console.log('obj', stuff);
@@ -284,9 +291,9 @@ listener.sockets.on('connection', function(socket){
     console.log(new Date()+": " + boxvalue + "-Zone16");
     if (boxvalue != Zone16.readSync()) { //only change LED if status has changed
       Zone16.writeSync(boxvalue); //turn LED on or off
-    }
+     }
+   });
   });
-});
 
 function pistats(){
   console.log('os.tmpdir:'+os.tmpdir());

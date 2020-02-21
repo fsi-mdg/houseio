@@ -3,144 +3,167 @@
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
 </head>
+<div class="topnav">
+  <a href="#houseio" class="active">HouseIO</a>
+  <a href="#about">About</a>
+</div>
+<nav>
+   <style="background-color:Green;">
+   <font face="verdana">
+   <h1><center>HouseIO v1.00</center></h1>
+</nav>
  <body>
-  <font face="verdana">
-  <h1>HouseIO v1.00</h1>
   <div id="date"></div>
+  <div id="sunrise"></div>
+  <div id="sunset"></div>
   <div id="temp"></div>
   <div id="humidity"></div>
   <div id="id"></div>
-<!--  <textarea id="text"></textarea> -->
+<!--  <textarea id="text"></textarea> --> 
+  <h2>Sunrise / Sunset Control</h2>
+    Off / On<br>
+      <label class="switch">
+      <input type="checkbox" id="SunriseSunset">
+      <span class="slider round"></span>
+      </label>
+
+
   <h2>Porch Light Control:</h2>
-    Zone1<br>
+    Zone1		Zone16<br>
       <label class="switch">
       <input type="checkbox" id="Zone1">
       <span class="slider round"></span>
       </label>
-    <br>
-    Zone2<br>
-      <label class="switch">
-      <input type="checkbox" id="Zone2">
-      <span class="slider round"></span>
-      </label>
-    <br>
-    Zone3<br>
-      <label class="switch">
-      <input type="checkbox" id="Zone3">
-      <span class="slider round"></span>
-      </label>
-    <br>
-    Zone4<br>
-      <label class="switch">
-      <input type="checkbox" id="Zone4">
-      <span class="slider round"></span>
-      </label>
-    <br>
-    Zone5<br>
-      <label class="switch">
-      <input type="checkbox" id="Zone5">
-      <span class="slider round"></span>
-      </label>
-    <br>
-    Zone6<br>
-      <label class="switch">
-      <input type="checkbox" id="Zone6">
-      <span class="slider round"></span>
-      </label>
-    <br>
-    Zone7<br>
-      <label class="switch">
-      <input type="checkbox" id="Zone7">
-      <span class="slider round"></span>
-      </label>
-    <br>
-    Zone8<br>
-      <label class="switch">
-      <input type="checkbox" id="Zone8">
-      <span class="slider round"></span>
-      </label>
-    <br>
-    Zone9<br>
-      <label class="switch">
-      <input type="checkbox" id="Zone9">
-      <span class="slider round"></span>
-      </label>
-    <br>
-    Zone10<br>
-      <label class="switch">
-      <input type="checkbox" id="Zone10">
-      <span class="slider round"></span>
-      </label>
-    <br>
-    Zone11<br>
-      <label class="switch">
-      <input type="checkbox" id="Zone11">
-      <span class="slider round"></span>
-      </label>
-    <br>
-    Zone12<br>
-      <label class="switch">
-      <input type="checkbox" id="Zone12">
-      <span class="slider round"></span>
-      </label>
-    <br>
-    Zone13<br>
-      <label class="switch">
-      <input type="checkbox" id="Zone13">
-      <span class="slider round"></span>
-      </label>
-    <br>
-    Zone14<br>
-      <label class="switch">
-      <input type="checkbox" id="Zone14">
-      <span class="slider round"></span>
-      </label>
-    <br>
-    Zone15<br>
-      <label class="switch">
-      <input type="checkbox" id="Zone15">
-      <span class="slider round"></span>
-      </label>
-    <br>
-    Zone16<br>
       <label class="switch">
       <input type="checkbox" id="Zone16">
       <span class="slider round"></span>
       </label>
     <br>
+    <br>
+    Zone2 		Zone15<br>
+      <label class="switch">
+      <input type="checkbox" id="Zone2">
+      <span class="slider round"></span>
+      </label>
+      <label class="switch">
+      <input type="checkbox" id="Zone15">
+      <span class="slider round"></span>
+      </label>
+    <br>  
+    <br>  
+    Zone3		Zone14<br>
+      <label class="switch">
+      <input type="checkbox" id="Zone3">
+      <span class="slider round"></span>
+      </label>
+      <label class="switch">
+      <input type="checkbox" id="Zone14">
+      <span class="slider round"></span>
+      </label>
+    <br>
+    <br>
+    Zone4		Zone13<br>
+      <label class="switch">
+      <input type="checkbox" id="Zone4">
+      <span class="slider round"></span>
+      </label>
+      <label class="switch">
+      <input type="checkbox" id="Zone13">
+      <span class="slider round"></span>
+      </label>
+    <br>
+    <br>
+    Zone5		Zone12<br>
+      <label class="switch">
+      <input type="checkbox" id="Zone5">
+      <span class="slider round"></span>
+      </label>
+      <label class="switch">
+      <input type="checkbox" id="Zone12">
+      <span class="slider round"></span>
+      </label>
+    <br>
+    <br>
+    Zone6		Zone11<br>
+      <label class="switch">
+      <input type="checkbox" id="Zone6">
+      <span class="slider round"></span>
+      </label>
+      <label class="switch">
+      <input type="checkbox" id="Zone11">
+      <span class="slider round"></span>
+      </label>
+    <br>
+    <br>
+    Zone7 		Zone10<br>
+      <label class="switch">
+      <input type="checkbox" id="Zone7">
+      <span class="slider round"></span>
+      </label>
+      <label class="switch">
+      <input type="checkbox" id="Zone10">
+      <span class="slider round"></span>
+      </label>
+    <br>
+    <br>
+    Zone8		Zone9<br>
+      <label class="switch">
+      <input type="checkbox" id="Zone8">
+      <span class="slider round"></span>
+      </label>
+      <label class="switch">
+      <input type="checkbox" id="Zone9">
+      <span class="slider round"></span>
+      </label>
+    <br>
+    <br>
+<div class="footer">
+	<p>Copyright Floating Software, Inc 2020</p>
+</div>
 
-  <script>
+<script>
    var i = 1;
    var socket = io.connect();
  
+   socket.on('sunrisesunset', function(data){
+        switch (data.sunrisesunset) { 
+          case 1:
+            document.getElementById("SunriseSunset").checked = true;
+            break;
+          case 0:       
+            document.getElementById("SunriseSunset").checked = false;
+            break;
+          default:
+        }        
+   });          
+
        socket.on('date', function(data){
            $('#date').text("Date & Time: "+data.date);
-//           console.log("Date & Time: "+data.date);
+       });
+       socket.on('sunrise', function(data){
+           $('#sunrise').text("Sunrise: "+data.sunrise);
+       });
+       socket.on('sunset', function(data){
+           $('#sunset').text("Sunset: "+data.sunset);
        });
        socket.on('temp', function(data){
            $('#temp').text("Temperature: "+data.temp);
-//           console.log("tmp:"+data.temp); 
        });
        socket.on('humidity', function(data){
            $('#humidity').text("Humidity: "+data.humidity);
-//           console.log("Humidity:"+data.humidity);
            ++i;
            $('#id').text("Sequence#: "+i);
        });
 
        socket.on('Zone1init', function(data) {
-//           console.log("Zone1init Checked Status = " + JSON.stringify(data.Zone1init));
            switch (data.Zone1init) { 
              case 1:
                document.getElementById("Zone1").checked = true;
-//               console.log("Set Z1 Checked");
                break;
              case 0:        
                document.getElementById("Zone1").checked = false;
-//               console.log("Set Z1 Unchecked");
                break;
              default:
-               console.log("Debug: Z1 Invalid Switch Value");
            }        
        });          
        socket.on('Zone2init', function(data) {
@@ -152,10 +175,9 @@
                document.getElementById("Zone2").checked = false;
                break;
              default:
-               console.log("Debug: Z2 Invalid Switch Value");
            }        
        });          
-       socket.on('Zone3init', function(data) {
+         socket.on('Zone3init', function(data) {
            switch (data.Zone3init) { 
              case 1:
                document.getElementById("Zone3").checked = true;
@@ -164,7 +186,6 @@
                document.getElementById("Zone3").checked = false;
                break;
              default:
-               console.log("Debug: Z3 Invalid Switch Value");
            }        
        });          
        socket.on('Zone4init', function(data) {
@@ -176,7 +197,6 @@
                document.getElementById("Zone4").checked = false;
                break;
              default:
-               console.log("Debug: Z4 Invalid Switch Value");
            }        
        });          
        socket.on('Zone5init', function(data) {
@@ -188,7 +208,6 @@
                document.getElementById("Zone5").checked = false;
                break;
              default:
-               console.log("Debug: Z5 Invalid Switch Value");
            }        
        });          
        socket.on('Zone6init', function(data) {
@@ -200,7 +219,6 @@
                document.getElementById("Zone6").checked = false;
                break;
              default:
-               console.log("Debug: Z6 Invalid Switch Value");
            }        
        });          
        socket.on('Zone7init', function(data) {
@@ -212,7 +230,6 @@
                document.getElementById("Zone7").checked = false;
                break;
              default:
-               console.log("Debug: Z7 Invalid Switch Value");
            }        
        });          
        socket.on('Zone8init', function(data) {
@@ -224,7 +241,6 @@
                document.getElementById("Zone8").checked = false;
                break;
              default:
-               console.log("Debug: Z8 Invalid Switch Value");
            }        
        });          
        socket.on('Zone9init', function(data) {
@@ -236,7 +252,6 @@
                document.getElementById("Zone9").checked = false;
                break;
              default:
-               console.log("Debug: Z9 Invalid Switch Value");
            }        
        });          
        socket.on('Zone10init', function(data) {
@@ -248,7 +263,6 @@
                document.getElementById("Zone10").checked = false;
                break;
              default:
-               console.log("Debug: Z10 Invalid Switch Value");
            }        
        });          
        socket.on('Zone11init', function(data) {
@@ -260,7 +274,6 @@
                document.getElementById("Zone11").checked = false;
                break;
              default:
-               console.log("Debug: Z11 Invalid Switch Value");
            }        
        });          
        socket.on('Zone12init', function(data) {
@@ -272,7 +285,6 @@
                document.getElementById("Zone12").checked = false;
                break;
              default:
-               console.log("Debug: Z12 Invalid Switch Value");
            }        
        });          
        socket.on('Zone13init', function(data) {
@@ -284,7 +296,6 @@
                document.getElementById("Zone13").checked = false;
                break;
              default:
-               console.log("Debug: Z13 Invalid Switch Value");
            }        
        });          
        socket.on('Zone14init', function(data) {
@@ -296,7 +307,6 @@
                document.getElementById("Zone14").checked = false;
                break;
              default:
-               console.log("Debug: Z14 Invalid Switch Value");
            }        
        });          
        socket.on('Zone15init', function(data) {
@@ -308,7 +318,6 @@
                document.getElementById("Zone15").checked = false;
                break;
              default:
-               console.log("Debug: Z15 Invalid Switch Value");
            }        
        });          
        socket.on('Zone16init', function(data) {
@@ -320,7 +329,6 @@
                document.getElementById("Zone16").checked = false;
                break;
              default:
-               console.log("Debug: Z16 Invalid Switch Value");
            }        
        });          
 
@@ -564,6 +572,42 @@
  .slider.round:before {
    border-radius: 50%;
  }
+ .footer {
+  position:relative;
+  left: 0;
+  bottom: 0;
+  width:100%;
+  height: 80;
+  background-color:gray;
+  color: white;
+  text-aligh: center;
+ }
+.topnav {
+  background-color: #333;
+  overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  display: block;
+  background-color-gray;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  border-bottom: 5px solid transparent;
+}
+
+.topnav a:hover {
+  border-bottom: 3px solid red;
+}
+
+.topnav a.active {
+  border-bottom: 3px solid red;
+}
+
 </style>
 
 </head>
