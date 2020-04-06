@@ -5,9 +5,7 @@
   var io = require('socket.io');
   var os = require('os');
   const { getSunrise, getSunset } = require('sunrise-sunset-js')
-  var SunriseSunsetControl = 1;
   var sensorLib = require("node-dht-sensor");
-
 //  var sensorResult = sensorLib.read(11, 3);
   var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
   var Zone1 = new Gpio(4, 'out'); //use GPIO pin 4 as output
@@ -77,7 +75,6 @@
   listener.sockets.on('connection', function(socket){
 //send data to client
     console.log('New client has connected'+socket);
-
 // Read the current Zone Switch Values from Hardware
     var boxvalue = Zone1.readSync()
     socket.emit('Zone1init', {'Zone1init': boxvalue});
@@ -137,31 +134,10 @@
 //    socket.emit('humidity', {'humidity': humidity.toFixed(2)});
       var  sunset = getSunset(44.6987899,-93.4762658);
       socket.emit('sunset', {'sunset': sunset.toLocaleString()});
-console.log ('sunset: '+sunset);
       var  sunrise = getSunrise(44.6987899,-93.4762658);
       socket.emit('sunrise', {'sunrise': sunrise.toLocaleString()});
-console.log ('sunrise: '+sunrise);
       var d = new Date();
       socket.emit('date', {'date': d.toLocaleString()});
-console.log ('date: ' +d);
-
-if ( d > sunrise ) {
-console.log ('The sun came up today');
-}
-if ( d > sunset ) {
-console.log ('Its dark now');
-}
-
-
-
-      var boxvalue = SunriseSunsetControl;
-      socket.emit('SunriseSunsetControl', {'SunriseSunsetControl': boxvalue});
- 
-//      if (d > sunrise) && (d < sunset) {
-//          init_GPIO(0);
-//      else init_GPIO(1);
-//      }
-
       var boxvalue = Zone1.readSync()
       socket.emit('Zone1init', {'Zone1init': boxvalue});
       var boxvalue = Zone2.readSync()
@@ -198,21 +174,14 @@ console.log ('Its dark now');
 
 
 //recieve client data
-   socket.on('client_data', function(stuff){
-   process.stdout.write(stuff.letter); 
-         console.log('obj', stuff);
-         console.log('.toString', stuff.toString());
-         console.log('String()', String(stuff));
-         console.log('JSON.stringify',JSON.stringify(stuff));
-  });
-  socket.on('SunriseSunsetControl', function(data) { //get light switch status from client
-    boxvalue = data;
-    console.log(new Date()+": " + boxvalue + "-SunriseSunsetControl");
-    if (boxvalue != SunriseSunsetControl) { //only change LED if status has changed
-      SunriseSunsetControl=boxvalue; //turn LED on or off
-    }
-  });
-  socket.on('Zone1', function(data) { //get light switch status from client
+    socket.on('client_data', function(stuff){
+    process.stdout.write(stuff.letter);
+          console.log('obj', stuff);
+          console.log('.toString', stuff.toString());
+          console.log('String()', String(stuff));
+          console.log('JSON.stringify',JSON.stringify(stuff));
+   });
+    socket.on('Zone1', function(data) { //get light switch status from client
     boxvalue = data;
     console.log(new Date()+": " + boxvalue + "-Zone1");
     if (boxvalue != Zone1.readSync()) { //only change LED if status has changed

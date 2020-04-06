@@ -23,9 +23,11 @@
   <h2>Sunrise / Sunset Control</h2>
     Off / On<br>
       <label class="switch">
-      <input type="checkbox" id="SunriseSunsetControl">
+      <input type="checkbox" id="SunriseSunset">
       <span class="slider round"></span>
       </label>
+
+
   <h2>Porch Light Control:</h2>
     Zone1		Zone16<br>
       <label class="switch">
@@ -123,6 +125,18 @@
    var i = 1;
    var socket = io.connect();
  
+   socket.on('sunrisesunset', function(data){
+        switch (data.sunrisesunset) { 
+          case 1:
+            document.getElementById("SunriseSunset").checked = true;
+            break;
+          case 0:       
+            document.getElementById("SunriseSunset").checked = false;
+            break;
+          default:
+        }        
+   });          
+
        socket.on('date', function(data){
            $('#date').text("Date & Time: "+data.date);
        });
@@ -131,27 +145,15 @@
        });
        socket.on('sunset', function(data){
            $('#sunset').text("Sunset: "+data.sunset);
-           ++i;
-           $('#id').text("Sequence#: "+i);
        });
        socket.on('temp', function(data){
            $('#temp').text("Temperature: "+data.temp);
        });
        socket.on('humidity', function(data){
            $('#humidity').text("Humidity: "+data.humidity);
+           ++i;
+           $('#id').text("Sequence#: "+i);
        });
-
-       socket.on('SunriseSunsetControl', function(data) {
-           switch (data.SunriseSunsetControl) { 
-             case 1:
-               document.getElementById("SunriseSunsetControl").checked = true;
-               break;
-             case 0:        
-               document.getElementById("SunriseSunsetControl").checked = false;
-               break;
-             default:
-           }        
-       });          
 
        socket.on('Zone1init', function(data) {
            switch (data.Zone1init) { 
@@ -343,12 +345,6 @@
   var socket = io(); //load socket.io-client and connect to the host that serves the page
 
  //When Page Loads add Event Listeners  for Zone toggles 
-  window.addEventListener("load", function(){ //when page loads
-    var lightbox = document.getElementById("SunriseSunsetControl");
-    lightbox.addEventListener("change", function() { //add event listener for when checkbox changes
-      socket.emit("SunriseSunsetControl", Number(this.checked)); //send button status to server (as 1 or 0)
-    });
-  });
   window.addEventListener("load", function(){ //when page loads
     var lightbox = document.getElementById("Zone1");
     lightbox.addEventListener("change", function() { //add event listener for when checkbox changes
