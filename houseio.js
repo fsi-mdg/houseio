@@ -5,9 +5,8 @@
   var io = require('socket.io');
   var os = require('os');
   const { getSunrise, getSunset } = require('sunrise-sunset-js')
-  var SunriseSunsetControl = 1;
   var sensorLib = require("node-dht-sensor");
-
+  var SunrSunsCtrl = 1
 //  var sensorResult = sensorLib.read(11, 3);
   var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
   var Zone1 = new Gpio(4, 'out'); //use GPIO pin 4 as output
@@ -50,13 +49,13 @@
                     response.writeHead(404);
                     response.write("opps this doesn't exist - 404");
                     response.end();
-                }
+                  }
                 else{
                     response.writeHead(200, {"Content-Type": "text/html"});
                     response.write(data, "utf8");
                     response.end();
-                }
-            });
+                  }
+                });
             break;
         default:
             response.writeHead(404);
@@ -76,57 +75,27 @@
 
   listener.sockets.on('connection', function(socket){
 //send data to client
-    console.log('New client has connected'+socket);
-
-// Read the current Zone Switch Values from Hardware
-    var boxvalue = Zone1.readSync()
-    socket.emit('Zone1init', {'Zone1init': boxvalue});
-    console.log('Zone1 Init Status: '+ boxvalue);
-    var boxvalue = Zone2.readSync();
-    socket.emit('Zone2init', {'Zone2init': boxvalue});
-    console.log('Zone2 Init Status: '+ boxvalue);
-    var boxvalue = Zone3.readSync();
-    socket.emit('Zone3init', {'Zone3init': boxvalue});
-    console.log('Zone3 Init Status: '+ boxvalue);
-    var boxvalue = Zone4.readSync();
-    socket.emit('Zone4init', {'Zone4init': boxvalue});
-    console.log('Zone4 Iniit Status: '+ boxvalue);
-    var boxvalue = Zone5.readSync();
-    socket.emit('Zone5init', {'Zone5init': boxvalue});
-    console.log('Zone5 Iniit Status: '+ boxvalue);
-    var boxvalue = Zone6.readSync();
-    socket.emit('Zone6init', {'Zone6init': boxvalue});
-    console.log('Zone6 Iniit Status: '+ boxvalue);
-    var boxvalue = Zone7.readSync();
-    socket.emit('Zone7init', {'Zone7init': boxvalue});
-    console.log('Zone7 Iniit Status: '+ boxvalue);
-    var boxvalue = Zone8.readSync();
-    socket.emit('Zone8init', {'Zone8init': boxvalue});
-    console.log('Zone8 Iniit Status: '+ boxvalue);
-    var boxvalue = Zone9.readSync();
-    socket.emit('Zone9init', {'Zone9init': boxvalue});
-    console.log('Zone9 Iniit Status: '+ boxvalue);
-    var boxvalue = Zone10.readSync();
-    socket.emit('Zone10init', {'Zone10init': boxvalue});
-    console.log('Zone10 Iniit Status: '+ boxvalue);
-    var boxvalue = Zone11.readSync();
-    socket.emit('Zone11init', {'Zone11init': boxvalue});
-    console.log('Zone11 Iniit Status: '+ boxvalue);
-    var boxvalue = Zone12.readSync();
-    socket.emit('Zone12init', {'Zone12init': boxvalue});
-    console.log('Zone12 Iniit Status: '+ boxvalue);
-    var boxvalue = Zone13.readSync();
-    socket.emit('Zone13init', {'Zone13init': boxvalue});
-    console.log('Zone13 Iniit Status: '+ boxvalue);
-    var boxvalue = Zone14.readSync();
-    socket.emit('Zone14init', {'Zone14init': boxvalue});
-    console.log('Zone14 Iniit Status: '+ boxvalue);
-    var boxvalue = Zone15.readSync();
-    socket.emit('Zone15init', {'Zone15init': boxvalue});
-    console.log('Zone15 Iniit Status: '+ boxvalue);
-    var boxvalue = Zone16.readSync();
-    socket.emit('Zone16init', {'Zone16init': boxvalue});
-    console.log('Zone16 Iniit Status: '+ boxvalue);
+    console.log('New client has connected'+socket.server);
+// Read the current GPIO value from hardware and send to html page
+    console.log("Initializing html pages"+SunrSunsCtrl);
+    
+    socket.emit('SunriseSunsetinit', {'SunriseSunsetinit': SunrSunsCtrl});
+    socket.emit('Zone1init', {'Zone1init': Zone1.readSync()});
+    socket.emit('Zone2init', {'Zone2init': Zone2.readSync()});
+    socket.emit('Zone3init', {'Zone3init': Zone3.readSync()});
+    socket.emit('Zone4init', {'Zone4init': Zone4.readSync()});
+    socket.emit('Zone5init', {'Zone5init': Zone5.readSync()});
+    socket.emit('Zone6init', {'Zone6init': Zone6.readSync()});
+    socket.emit('Zone7init', {'Zone7init': Zone7.readSync()});
+    socket.emit('Zone8init', {'Zone8init': Zone8.readSync()});
+    socket.emit('Zone9init', {'Zone9init': Zone9.readSync()});
+    socket.emit('Zone10init', {'Zone10init': Zone10.readSync()});
+    socket.emit('Zone11init', {'Zone11init': Zone11.readSync()});
+    socket.emit('Zone12init', {'Zone12init': Zone12.readSync()});
+    socket.emit('Zone13init', {'Zone13init': Zone13.readSync()});
+    socket.emit('Zone14init', {'Zone14init': Zone14.readSync()});
+    socket.emit('Zone15init', {'Zone15init': Zone15.readSync()});
+    socket.emit('Zone16init', {'Zone16init': Zone16.readSync()});
 
 // Drive Periodic Updates to Client
     setInterval(function(){
@@ -135,193 +104,176 @@
 //    var humidity = sensorResult.humidity;
 //    socket.emit('temp', {'temp': ftemp.toFixed(2)});
 //    socket.emit('humidity', {'humidity': humidity.toFixed(2)});
-      var  sunset = getSunset(44.6987899,-93.4762658);
-      socket.emit('sunset', {'sunset': sunset.toLocaleString()});
-console.log ('sunset: '+sunset);
-      var  sunrise = getSunrise(44.6987899,-93.4762658);
-      socket.emit('sunrise', {'sunrise': sunrise.toLocaleString()});
-console.log ('sunrise: '+sunrise);
+
+
       var d = new Date();
       socket.emit('date', {'date': d.toLocaleString()});
-console.log ('date: ' +d);
+      var dval=d.getHours()*100+d.getMinutes();
+//      dval='1000';
+      console.log('date: '+dval);
 
-if ( d > sunrise ) {
-console.log ('The sun came up today');
-}
-if ( d > sunset ) {
-console.log ('Its dark now');
-}
+      var  sunrise = getSunrise(44.6987899,-93.4762658);
+      socket.emit('sunrise', {'sunrise': sunrise.toLocaleString()});
+      var sunriseval = sunrise.getHours()*100+sunrise.getMinutes();
+      console.log('sunrise: '+sunriseval);
+
+      var  sunset = getSunset(44.6987899,-93.4762658);
+      socket.emit('sunset', {'sunset': sunset.toLocaleString()});
+      var sunsetval = sunset.getHours()*100+sunset.getMinutes();
+      console.log('sunset: '+sunsetval);
+
+      if (dval >= sunriseval && dval <= sunsetval ){
+          console.log('The sun is out\n');
+          if(SunrSunsCtrl == 1) {
+              console.log('Control is on / Turn Off the lights\n');
+              init_GPIO(0);
+              }
+          else {
+              console.log('Control is off / do nothing\n');
+              }
+       }
+       else {
+           console.log('Its dark outside\n');
+           if(SunrSunsCtrl == 1) {
+               console.log('Control is on / Turn ON the lights\n');
+               init_GPIO(1);
+               }
+           else {
+               console.log('Control is off / do nothing\n');
+               }
+       }
 
 
+       socket.emit('SunriseSunsetinit', {'SunriseSunsetinit': SunrSunsCtrl});
+       socket.emit('Zone1init', {'Zone1init': Zone1.readSync()});
+       socket.emit('Zone2init', {'Zone2init': Zone2.readSync()});
+       socket.emit('Zone3init', {'Zone3init': Zone3.readSync()});
+       socket.emit('Zone4init', {'Zone4init': Zone4.readSync()});
+       socket.emit('Zone5init', {'Zone5init': Zone5.readSync()});
+       socket.emit('Zone6init', {'Zone6init': Zone6.readSync()});
+       socket.emit('Zone7init', {'Zone7init': Zone7.readSync()});
+       socket.emit('Zone8init', {'Zone8init': Zone8.readSync()});
+       socket.emit('Zone9init', {'Zone9init': Zone9.readSync()});
+       socket.emit('Zone10init', {'Zone10init': Zone10.readSync()});
+       socket.emit('Zone11init', {'Zone11init': Zone11.readSync()});
+       socket.emit('Zone12init', {'Zone12init': Zone12.readSync()});
+       socket.emit('Zone13init', {'Zone13init': Zone13.readSync()});
+       socket.emit('Zone14init', {'Zone14init': Zone14.readSync()});
+       socket.emit('Zone15init', {'Zone15init': Zone15.readSync()});
+       socket.emit('Zone16init', {'Zone16init': Zone16.readSync()});
 
-      var boxvalue = SunriseSunsetControl;
-      socket.emit('SunriseSunsetControl', {'SunriseSunsetControl': boxvalue});
- 
-//      if (d > sunrise) && (d < sunset) {
-//          init_GPIO(0);
-//      else init_GPIO(1);
-//      }
-
-      var boxvalue = Zone1.readSync()
-      socket.emit('Zone1init', {'Zone1init': boxvalue});
-      var boxvalue = Zone2.readSync()
-      socket.emit('Zone2init', {'Zone2init': boxvalue});
-      var boxvalue = Zone3.readSync()
-      socket.emit('Zone3init', {'Zone3init': boxvalue});
-      var boxvalue = Zone4.readSync()
-      socket.emit('Zone4init', {'Zone4init': boxvalue});
-      var boxvalue = Zone5.readSync()
-      socket.emit('Zone5init', {'Zone4init': boxvalue});
-      var boxvalue = Zone6.readSync()
-      socket.emit('Zone6init', {'Zone4init': boxvalue});
-      var boxvalue = Zone7.readSync()
-      socket.emit('Zone7init', {'Zone4init': boxvalue});
-      var boxvalue = Zone8.readSync()
-      socket.emit('Zone8init', {'Zone4init': boxvalue});
-      var boxvalue = Zone9.readSync()
-      socket.emit('Zone9init', {'Zone4init': boxvalue});
-      var boxvalue = Zone10.readSync()
-      socket.emit('Zone10init', {'Zone4init': boxvalue});
-      var boxvalue = Zone11.readSync()
-      socket.emit('Zone11init', {'Zone4init': boxvalue});
-      var boxvalue = Zone12.readSync()
-      socket.emit('Zone12init', {'Zone4init': boxvalue});
-      var boxvalue = Zone13.readSync()
-      socket.emit('Zone13init', {'Zone4init': boxvalue});
-      var boxvalue = Zone14.readSync()
-      socket.emit('Zone14init', {'Zone4init': boxvalue});
-      var boxvalue = Zone15.readSync()
-      socket.emit('Zone15init', {'Zone4init': boxvalue});
-      var boxvalue = Zone16.readSync()
-      socket.emit('Zone16init', {'Zone4init': boxvalue});
      },5000);
 
 
 //recieve client data
-   socket.on('client_data', function(stuff){
-   process.stdout.write(stuff.letter); 
-         console.log('obj', stuff);
-         console.log('.toString', stuff.toString());
-         console.log('String()', String(stuff));
-         console.log('JSON.stringify',JSON.stringify(stuff));
-  });
-  socket.on('SunriseSunsetControl', function(data) { //get light switch status from client
-    boxvalue = data;
-    console.log(new Date()+": " + boxvalue + "-SunriseSunsetControl");
-    if (boxvalue != SunriseSunsetControl) { //only change LED if status has changed
-      SunriseSunsetControl=boxvalue; //turn LED on or off
+    socket.on('client_data', function(stuff){
+    process.stdout.write(stuff.letter);
+          console.log('obj', stuff);
+          console.log('.toString', stuff.toString());
+          console.log('String()', String(stuff));
+          console.log('JSON.stringify',JSON.stringify(stuff));
+   });
+  socket.on('SunriseSunset', function(data) { //get light switch status from client
+//    boxvalue = data;
+    console.log(new Date()+": " + data + "-SunriseSunset");
+    if (data != SunrSunsCtrl) { //only change LED if status has changed
+      SunrSunsCtrl = data; //turn LED on or off
     }
   });
   socket.on('Zone1', function(data) { //get light switch status from client
-    boxvalue = data;
-    console.log(new Date()+": " + boxvalue + "-Zone1");
-    if (boxvalue != Zone1.readSync()) { //only change LED if status has changed
-      Zone1.writeSync(boxvalue); //turn LED on or off
+    console.log(new Date()+": " + data + "-Zone1");
+    if (data != Zone1.readSync()) { //only change LED if status has changed
+      Zone1.writeSync(data); //turn LED on or off
     }
   });
   socket.on('Zone2', function(data) { //get light switch status from client
-    boxvalue = data;
-    console.log(new Date()+": " + boxvalue + "-Zone2");
-    if (boxvalue != Zone2.readSync()) { //only change LED if status has changed
-      Zone2.writeSync(boxvalue); //turn LED on or off
+    console.log(new Date()+": " + data + "-Zone2");
+    if (data != Zone2.readSync()) { //only change LED if status has changed
+      Zone2.writeSync(data); //turn LED on or off
     }
   });
   socket.on('Zone3', function(data) { //get light switch status from client
-    boxvalue = data;
-    console.log(new Date()+": " + boxvalue + "-Zone3");
-    if (boxvalue != Zone3.readSync()) { //only change LED if status has changed
-      Zone3.writeSync(boxvalue); //turn LED on or off
+    console.log(new Date()+": " + data + "-Zone3");
+    if (data != Zone3.readSync()) { //only change LED if status has changed
+      Zone3.writeSync(data); //turn LED on or off
     }
   });
   socket.on('Zone4', function(data) { //get light switch status from client
-    boxvalue = data;
-    console.log(new Date()+": " + boxvalue + "-Zone4");
-    if (boxvalue != Zone4.readSync()) { //only change LED if status has changed
-      Zone4.writeSync(boxvalue); //turn LED on or off
+    console.log(new Date()+": " + data + "-Zone4");
+    if (data != Zone4.readSync()) { //only change LED if status has changed
+      Zone4.writeSync(data); //turn LED on or off
     }
   });
   socket.on('Zone5', function(data) { //get light switch status from client
-    boxvalue = data;
-    console.log(new Date()+": " + boxvalue + "-Zone5");
-    if (boxvalue != Zone5.readSync()) { //only change LED if status has changed
-      Zone5.writeSync(boxvalue); //turn LED on or off
+    console.log(new Date()+": " + data + "-Zone5");
+    if (data != Zone5.readSync()) { //only change LED if status has changed
+      Zone5.writeSync(data); //turn LED on or off
     }
   });
   socket.on('Zone6', function(data) { //get light switch status from client
-    boxvalue = data;
-    console.log(new Date()+": " + boxvalue + "-Zone6");
-    if (boxvalue != Zone6.readSync()) { //only change LED if status has changed
-      Zone6.writeSync(boxvalue); //turn LED on or off
+    console.log(new Date()+": " + data + "-Zone6");
+    if (data != Zone6.readSync()) { //only change LED if status has changed
+      Zone6.writeSync(data); //turn LED on or off
     }
   });
   socket.on('Zone7', function(data) { //get light switch status from client
-    boxvalue = data;
-    console.log(new Date()+": " + boxvalue + "-Zone7");
-    if (boxvalue != Zone7.readSync()) { //only change LED if status has changed
-      Zone7.writeSync(boxvalue); //turn LED on or off
+    console.log(new Date()+": " + data + "-Zone7");
+    if (data != Zone7.readSync()) { //only change LED if status has changed
+      Zone7.writeSync(data); //turn LED on or off
     }
   });
   socket.on('Zone8', function(data) { //get light switch status from client
-    boxvalue = data;
-    console.log(new Date()+": " + boxvalue + "-Zone8");
-    if (boxvalue != Zone8.readSync()) { //only change LED if status has changed
-      Zone8.writeSync(boxvalue); //turn LED on or off
+    console.log(new Date()+": " + data + "-Zone8");
+    if (data != Zone8.readSync()) { //only change LED if status has changed
+      Zone8.writeSync(data); //turn LED on or off
     }
   });
   socket.on('Zone9', function(data) { //get light switch status from client
-    boxvalue = data;
-    console.log(new Date()+": " + boxvalue + "-Zone9");
-    if (boxvalue != Zone9.readSync()) { //only change LED if status has changed
-      Zone9.writeSync(boxvalue); //turn LED on or off
+    console.log(new Date()+": " + data + "-Zone9");
+    if (data != Zone9.readSync()) { //only change LED if status has changed
+      Zone9.writeSync(data); //turn LED on or off
     }
   });
   socket.on('Zone10', function(data) { //get light switch status from client
-    boxvalue = data;
-    console.log(new Date()+": " + boxvalue + "-Zone10");
-    if (boxvalue != Zone10.readSync()) { //only change LED if status has changed
-      Zone10.writeSync(boxvalue); //turn LED on or off
+    console.log(new Date()+": " + data + "-Zone10");
+    if (data != Zone10.readSync()) { //only change LED if status has changed
+      Zone10.writeSync(data); //turn LED on or off
     }
   });
   socket.on('Zone11', function(data) { //get light switch status from client
-    boxvalue = data;
-    console.log(new Date()+": " + boxvalue + "-Zone11");
-    if (boxvalue != Zone11.readSync()) { //only change LED if status has changed
-      Zone11.writeSync(boxvalue); //turn LED on or off
+    console.log(new Date()+": " + data + "-Zone11");
+    if (data != Zone11.readSync()) { //only change LED if status has changed
+      Zone11.writeSync(data); //turn LED on or off
     }
   });
   socket.on('Zone12', function(data) { //get light switch status from client
-    boxvalue = data;
-    console.log(new Date()+": " + boxvalue + "-Zone12");
-    if (boxvalue != Zone12.readSync()) { //only change LED if status has changed
-      Zone12.writeSync(boxvalue); //turn LED on or off
+    console.log(new Date()+": " + data + "-Zone12");
+    if (data != Zone12.readSync()) { //only change LED if status has changed
+      Zone12.writeSync(data); //turn LED on or off
     }
   });
   socket.on('Zone13', function(data) { //get light switch status from client
-    boxvalue = data;
-    console.log(new Date()+": " + boxvalue + "-Zone13");
-    if (boxvalue != Zone13.readSync()) { //only change LED if status has changed
-      Zone13.writeSync(boxvalue); //turn LED on or off
+    console.log(new Date()+": " + data + "-Zone13");
+    if (data != Zone13.readSync()) { //only change LED if status has changed
+      Zone13.writeSync(data); //turn LED on or off
     }
   });
   socket.on('Zone14', function(data) { //get light switch status from client
-    boxvalue = data;
-    console.log(new Date()+": " + boxvalue + "-Zone14");
-    if (boxvalue != Zone14.readSync()) { //only change LED if status has changed
-      Zone14.writeSync(boxvalue); //turn LED on or off
+    console.log(new Date()+": " + data + "-Zone14");
+    if (data != Zone14.readSync()) { //only change LED if status has changed
+      Zone14.writeSync(data); //turn LED on or off
     }
   });
   socket.on('Zone15', function(data) { //get light switch status from client
-    boxvalue = data;
-    console.log(new Date()+": " + boxvalue + "-Zone15");
-    if (boxvalue != Zone15.readSync()) { //only change LED if status has changed
-      Zone15.writeSync(boxvalue); //turn LED on or off
+    console.log(new Date()+": " + data + "-Zone15");
+    if (data != Zone15.readSync()) { //only change LED if status has changed
+      Zone15.writeSync(data); //turn LED on or off
     }
   });
   socket.on('Zone16', function(data) { //get light switch status from client
-    boxvalue = data;
-    console.log(new Date()+": " + boxvalue + "-Zone16");
-    if (boxvalue != Zone16.readSync()) { //only change LED if status has changed
-      Zone16.writeSync(boxvalue); //turn LED on or off
+    console.log(new Date()+": " + data + "-Zone16");
+    if (data != Zone16.readSync()) { //only change LED if status has changed
+      Zone16.writeSync(data); //turn LED on or off
      }
    });
   });

@@ -5,8 +5,9 @@
   var io = require('socket.io');
   var os = require('os');
   const { getSunrise, getSunset } = require('sunrise-sunset-js')
+  var SSCtrl = 0;
   var sensorLib = require("node-dht-sensor");
-  var SunrSunsCtrl = 1
+
 //  var sensorResult = sensorLib.read(11, 3);
   var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
   var Zone1 = new Gpio(4, 'out'); //use GPIO pin 4 as output
@@ -72,132 +73,121 @@
   io.listen(server);
   console.log("socket.io started");
   var listener = io.listen(server);
-
   listener.sockets.on('connection', function(socket){
 //send data to client
     console.log('New client has connected'+socket);
-// Read the current Zone Switch Values from Hardware
-    var boxvalue = Zone1.readSync()
-    socket.emit('Zone1init', {'Zone1init': boxvalue});
-//    console.log('Zone1 Init Status: '+ boxvalue);
-    var boxvalue = Zone2.readSync();
-    socket.emit('Zone2init', {'Zone2init': boxvalue});
-//    console.log('Zone2 Init Status: '+ boxvalue);
-    var boxvalue = Zone3.readSync();
-    socket.emit('Zone3init', {'Zone3init': boxvalue});
-//    console.log('Zone3 Init Status: '+ boxvalue);
-    var boxvalue = Zone4.readSync();
-    socket.emit('Zone4init', {'Zone4init': boxvalue});
-//    console.log('Zone4 Iniit Status: '+ boxvalue);
-    var boxvalue = Zone5.readSync();
-    socket.emit('Zone5init', {'Zone5init': boxvalue});
-//    console.log('Zone5 Iniit Status: '+ boxvalue);
-    var boxvalue = Zone6.readSync();
-    socket.emit('Zone6init', {'Zone6init': boxvalue});
-//    console.log('Zone6 Iniit Status: '+ boxvalue);
-    var boxvalue = Zone7.readSync();
-    socket.emit('Zone7init', {'Zone7init': boxvalue});
-//    console.log('Zone7 Iniit Status: '+ boxvalue);
-    var boxvalue = Zone8.readSync();
-    socket.emit('Zone8init', {'Zone8init': boxvalue});
-//    console.log('Zone8 Iniit Status: '+ boxvalue);
-    var boxvalue = Zone9.readSync();
-    socket.emit('Zone9init', {'Zone9init': boxvalue});
-//    console.log('Zone9 Iniit Status: '+ boxvalue);
-    var boxvalue = Zone10.readSync();
-    socket.emit('Zone10init', {'Zone10init': boxvalue});
-//    console.log('Zone10 Iniit Status: '+ boxvalue);
-    var boxvalue = Zone11.readSync();
-    socket.emit('Zone11init', {'Zone11init': boxvalue});
-//    console.log('Zone11 Iniit Status: '+ boxvalue);
-    var boxvalue = Zone12.readSync();
-    socket.emit('Zone12init', {'Zone12init': boxvalue});
-//    console.log('Zone12 Iniit Status: '+ boxvalue);
-    var boxvalue = Zone13.readSync();
-    socket.emit('Zone13init', {'Zone13init': boxvalue});
-//    console.log('Zone13 Iniit Status: '+ boxvalue);
-    var boxvalue = Zone14.readSync();
-    socket.emit('Zone14init', {'Zone14init': boxvalue});
-//    console.log('Zone14 Iniit Status: '+ boxvalue);
-    var boxvalue = Zone15.readSync();
-    socket.emit('Zone15init', {'Zone15init': boxvalue});
-//    console.log('Zone15 Iniit Status: '+ boxvalue);
-    var boxvalue = Zone16.readSync();
-    socket.emit('Zone16init', {'Zone16init': boxvalue});
-//    console.log('Zone16 Iniit Status: '+ boxvalue);
+    // Update the connected clientwith current hardware values
+    socket.emit('SunriseSunsetControl', {'SunriseSunsetControl': SSCtrl});
+    console.log("SunriseSunsetControl: "+SSCtrl);
+    socket.emit('Zone1', {'Zone1': Zone1.readSync()});
+    socket.emit('Zone2', {'Zone2': Zone2.readSync()});
+    socket.emit('Zone3', {'Zone3': Zone3.readSync()});
+    socket.emit('Zone4', {'Zone4': Zone4.readSync()});
+    socket.emit('Zone5', {'Zone5': Zone5.readSync()});
+    socket.emit('Zone6', {'Zone6': Zone6.readSync()});
+    socket.emit('Zone7', {'Zone7': Zone7.readSync()});
+    socket.emit('Zone8', {'Zone8': Zone8.readSync()});
+    socket.emit('Zone9', {'Zone9': Zone9.readSync()});
+    socket.emit('Zone10', {'Zone10': Zone10.readSync()});
+    socket.emit('Zone11', {'Zone11': Zone11.readSync()});
+    socket.emit('Zone12', {'Zone12': Zone12.readSync()});
+    socket.emit('Zone13', {'Zone13': Zone13.readSync()});
+    socket.emit('Zone14', {'Zone14': Zone14.readSync()});
+    socket.emit('Zone15', {'Zone15': Zone15.readSync()});
+    socket.emit('Zone16', {'Zone16': Zone16.readSync()});
 
-// Drive Periodic Updates to Client
+    // Drive Periodic Updates to Client
+
     setInterval(function(){
 //    var sensorResult = sensorLib.read(11, 3);
 //    var ftemp = sensorResult.temperature*9/5+32;
 //    var humidity = sensorResult.humidity;
 //    socket.emit('temp', {'temp': ftemp.toFixed(2)});
 //    socket.emit('humidity', {'humidity': humidity.toFixed(2)});
-      var  sunset = getSunset(44.6987899,-93.4762658);
-      socket.emit('sunset', {'sunset': sunset.toLocaleString()});
-      var  sunrise = getSunrise(44.6987899,-93.4762658);
-      socket.emit('sunrise', {'sunrise': sunrise.toLocaleString()});
-      var d = new Date();
+
+      var d = new Date(); 
+      var dval=d.getHours()*100+d.getMinutes();
+      //var dval="1950";
       socket.emit('date', {'date': d.toLocaleString()});
-      var boxvalue = Zone1.readSync()
-      socket.emit('Zone1init', {'Zone1init': boxvalue});
-      var boxvalue = Zone2.readSync()
-      socket.emit('Zone2init', {'Zone2init': boxvalue});
-      var boxvalue = Zone3.readSync()
-      socket.emit('Zone3init', {'Zone3init': boxvalue});
-      var boxvalue = Zone4.readSync()
-      socket.emit('Zone4init', {'Zone4init': boxvalue});
-      var boxvalue = Zone5.readSync()
-      socket.emit('Zone5init', {'Zone4init': boxvalue});
-      var boxvalue = Zone6.readSync()
-      socket.emit('Zone6init', {'Zone4init': boxvalue});
-      var boxvalue = Zone7.readSync()
-      socket.emit('Zone7init', {'Zone4init': boxvalue});
-      var boxvalue = Zone8.readSync()
-      socket.emit('Zone8init', {'Zone4init': boxvalue});
-      var boxvalue = Zone9.readSync()
-      socket.emit('Zone9init', {'Zone4init': boxvalue});
-      var boxvalue = Zone10.readSync()
-      socket.emit('Zone10init', {'Zone4init': boxvalue});
-      var boxvalue = Zone11.readSync()
-      socket.emit('Zone11init', {'Zone4init': boxvalue});
-      var boxvalue = Zone12.readSync()
-      socket.emit('Zone12init', {'Zone4init': boxvalue});
-      var boxvalue = Zone13.readSync()
-      socket.emit('Zone13init', {'Zone4init': boxvalue});
-      var boxvalue = Zone14.readSync()
-      socket.emit('Zone14init', {'Zone4init': boxvalue});
-      var boxvalue = Zone15.readSync()
-      socket.emit('Zone15init', {'Zone4init': boxvalue});
-      var boxvalue = Zone16.readSync()
-      socket.emit('Zone16init', {'Zone4init': boxvalue});
-     },5000);
+      console.log ('date: ' +d+dval);
+
+      var sunrise = getSunrise(44.6987899,-93.4762658, new Date());
+      var sunriseval = sunrise.getHours()*100+sunrise.getMinutes();
+      socket.emit('sunrise', {'sunrise': sunrise.toLocaleString()});
+      console.log ('sunrise:' +sunrise+sunriseval);
+
+      var sunset = getSunset(44.6987899,-93.4762658, new Date());
+      var sunsetval = sunset.getHours()*100+sunset.getMinutes();
+      socket.emit('sunset', {'sunset': sunset.toLocaleString()+"SSC:"+SSCtrl});
+      console.log ('sunset: '+sunset+sunsetval);
+      console.log ("SunriseSunsetControl +:"+SSCtrl);
+
+      if ( dval >= sunriseval && dval <= sunsetval ) {
+         console.log("The sun came up today"+"\n");
+
+         if (SSCtrl == 1) {
+             console.log("Control is on / Turning OFF the lights"+"\n");
+             //init_GPIO(1);
+            } else {
+              console.log("Control is off -> do nothing");
+            }  
+         } else {
+             console.log("The sun has set today"+"\n");
+             if(SSCtrl == 1) {
+                    console.log("Control is on / So off go the lights"); 
+               //  init_GPIO(0);
+             } else {
+              console.log("Control is off -> do nothing");
+
+             }
+         }
+
+      socket.emit('SunriseSunsetControl', {'SunriseSunsetControl': SSCtrl});
+      socket.emit('Zone1', {'Zone1': Zone1.readSync()});
+      socket.emit('Zone2', {'Zone2': Zone2.readSync()});
+      socket.emit('Zone3', {'Zone3': Zone3.readSync()});
+      socket.emit('Zone4', {'Zone4': Zone4.readSync()});
+      socket.emit('Zone5', {'Zone5': Zone5.readSync()});
+      socket.emit('Zone6', {'Zone6': Zone6.readSync()});
+      socket.emit('Zone7', {'Zone7': Zone7.readSync()});
+      socket.emit('Zone8', {'Zone8': Zone8.readSync()});
+      socket.emit('Zone9', {'Zone9': Zone9.readSync()});
+      socket.emit('Zone10', {'Zone10': Zone10.readSync()});
+      socket.emit('Zone11', {'Zone11': Zone11.readSync()});
+      socket.emit('Zone12', {'Zone12': Zone12.readSync()});
+      socket.emit('Zone13', {'Zone13': Zone13.readSync()});
+      socket.emit('Zone14', {'Zone14': Zone14.readSync()});
+      socket.emit('Zone15', {'Zone15': Zone15.readSync()});
+      socket.emit('Zone16', {'Zone16': Zone16.readSync()});
+
+     },10000);
 
 
 //recieve client data
-    socket.on('client_data', function(stuff){
-    process.stdout.write(stuff.letter);
-          console.log('obj', stuff);
-          console.log('.toString', stuff.toString());
-          console.log('String()', String(stuff));
-          console.log('JSON.stringify',JSON.stringify(stuff));
-   });
-  socket.on('SunriseSunset', function(data) { //get light switch status from client
-    boxvalue = data;
-    console.log(new Date()+": " + boxvalue + "-SunriseSunset");
-    if (boxvalue != SunrSunsCtrl) { //only change LED if status has changed
-      SunrSunsCtrl = boxvalue; //turn LED on or off
-    }
+   socket.on('client_data', function(stuff){
+   process.stdout.write(stuff.letter); 
+         console.log('obj', stuff);
+         console.log('.toString', stuff.toString());
+         console.log('String()', String(stuff));
+         console.log('JSON.stringify',JSON.stringify(stuff));
+  });
+  socket.on('SunriseSunsetControl', function(data) { //get light switch status from client
+    console.log(new Date()+": " + data +"SSCtr ++++++++++++++");
+    if (data != SSCtrl) { //only change LED if status has changed
+      SSCtrl=data; //turn LED on or off
+      console.log("changed state");
+    } else {
+      console.log("no change");
+      }
   });
   socket.on('Zone1', function(data) { //get light switch status from client
-    boxvalue = data;
-    console.log(new Date()+": " + boxvalue + "-Zone1");
-    if (boxvalue != Zone1.readSync()) { //only change LED if status has changed
-      Zone1.writeSync(boxvalue); //turn LED on or off
+    console.log(new Date()+": " + JSON.stringify(data) + "-Zone1 >>>>>>>>>>>>");
+    if (data != Zone1.readSync()) { //only change LED if status has changed
+      Zone1.writeSync(data); //turn LED on or off
     }
   });
-  socket.on('Zone2', function(data) { //get light switch status from client
-    boxvalue = data;
+  socket.on('Zone2', function(boxvalue) { //get light switch status from client
+    //boxvalue = data;
     console.log(new Date()+": " + boxvalue + "-Zone2");
     if (boxvalue != Zone2.readSync()) { //only change LED if status has changed
       Zone2.writeSync(boxvalue); //turn LED on or off
@@ -342,54 +332,43 @@ function formatSeconds(sec) {
 
 
 function init_GPIO(init){
+  console.log("initialize GPIO");
   var initval = init;
   Zone1.writeSync(initval);
   initval=Zone1.readSync();
-  console.log("Zone1 Init: "+initval);
   Zone2.writeSync(initval);
   initval=Zone2.readSync();
-  console.log("Zone2 Init: "+initval);
   Zone3.writeSync(initval);
   initval=Zone3.readSync();
-  console.log("Zone3 Init: "+initval);
   Zone4.writeSync(initval);
   initval=Zone4.readSync();
-  console.log("Zone4 Init: "+initval);
   Zone5.writeSync(initval);
-  initval=Zone4.readSync();
-  console.log("Zone5 Init: "+initval);
-  Zone6.writeSync(initval);
   initval=Zone5.readSync();
-  console.log("Zone6 Init: "+initval);
-  Zone7.writeSync(initval);
+  Zone6.writeSync(initval);
   initval=Zone6.readSync();
-  console.log("Zone7 Init: "+initval);
-  Zone8.writeSync(initval);
+  Zone7.writeSync(initval);
   initval=Zone7.readSync();
-  console.log("Zone8 Init: "+initval);
-  Zone9.writeSync(initval);
+  Zone8.writeSync(initval);
   initval=Zone8.readSync();
-  console.log("Zone9 Init: "+initval);
-  Zone10.writeSync(initval);
+  Zone9.writeSync(initval);
   initval=Zone9.readSync();
-  console.log("Zone10 Init: "+initval);
-  Zone11.writeSync(initval);
+  Zone10.writeSync(initval);
   initval=Zone10.readSync();
-  console.log("Zone11 Init: "+initval);
-  Zone12.writeSync(initval);
+  Zone11.writeSync(initval);
   initval=Zone11.readSync();
-  console.log("Zone12 Init: "+initval);
-  Zone13.writeSync(initval);
+  Zone12.writeSync(initval);
   initval=Zone12.readSync();
-  console.log("Zone13 Init: "+initval);
+  Zone13.writeSync(initval);
+  initval=Zone13.readSync();
   Zone14.writeSync(initval);
   initval=Zone14.readSync();
-  console.log("Zone14 Init: "+initval);
   Zone15.writeSync(initval);
   initval=Zone15.readSync();
-  console.log("Zone15 Init: "+initval);
   Zone16.writeSync(initval);
   initval=Zone16.readSync();
-  console.log("Zone16 Init: "+initval);
   console.log("---------------------");
+}
+
+function updateGPIO(){
+
 }
