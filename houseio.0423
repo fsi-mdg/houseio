@@ -84,18 +84,18 @@
     socket.emit('Zone2init', {'Zone2init': Zone2.readSync()});
     socket.emit('Zone3init', {'Zone3init': Zone3.readSync()});
     socket.emit('Zone4init', {'Zone4init': Zone4.readSync()});
-//    socket.emit('Zone5init', {'Zone5init': Zone5.readSync()});
-//    socket.emit('Zone6init', {'Zone6init': Zone6.readSync()});
-//    socket.emit('Zone7init', {'Zone7init': Zone7.readSync()});
-//    socket.emit('Zone8init', {'Zone8init': Zone8.readSync()});
-//    socket.emit('Zone9init', {'Zone9init': Zone9.readSync()});
-//    socket.emit('Zone10init', {'Zone10init': Zone10.readSync()});
-//    socket.emit('Zone11init', {'Zone11init': Zone11.readSync()});
-//    socket.emit('Zone12init', {'Zone12init': Zone12.readSync()});
-//    socket.emit('Zone13init', {'Zone13init': Zone13.readSync()});
-//    socket.emit('Zone14init', {'Zone14init': Zone14.readSync()});
-//    socket.emit('Zone15init', {'Zone15init': Zone15.readSync()});
-//    socket.emit('Zone16init', {'Zone16init': Zone16.readSync()});
+    socket.emit('Zone5init', {'Zone5init': Zone5.readSync()});
+    socket.emit('Zone6init', {'Zone6init': Zone6.readSync()});
+    socket.emit('Zone7init', {'Zone7init': Zone7.readSync()});
+    socket.emit('Zone8init', {'Zone8init': Zone8.readSync()});
+    socket.emit('Zone9init', {'Zone9init': Zone9.readSync()});
+    socket.emit('Zone10init', {'Zone10init': Zone10.readSync()});
+    socket.emit('Zone11init', {'Zone11init': Zone11.readSync()});
+    socket.emit('Zone12init', {'Zone12init': Zone12.readSync()});
+    socket.emit('Zone13init', {'Zone13init': Zone13.readSync()});
+    socket.emit('Zone14init', {'Zone14init': Zone14.readSync()});
+    socket.emit('Zone15init', {'Zone15init': Zone15.readSync()});
+    socket.emit('Zone16init', {'Zone16init': Zone16.readSync()});
 
 // Drive Periodic Updates to Client
     setInterval(function(){
@@ -110,17 +110,17 @@
       socket.emit('date', {'date': d.toLocaleString()});
       var dval=d.getHours()*100+d.getMinutes();
 //      dval='1000';
-//      console.log('date: '+dval);
+      //console.log('date: '+dval);
 
       var  sunrise = getSunrise(44.6987899,-93.4762658);
       socket.emit('sunrise', {'sunrise': sunrise.toLocaleString()});
       var sunriseval = sunrise.getHours()*100+sunrise.getMinutes();
-//      console.log('sunrise: '+sunriseval);
+      //console.log('sunrise: '+sunriseval);
 
       var  sunset = getSunset(44.6987899,-93.4762658);
       socket.emit('sunset', {'sunset': sunset.toLocaleString()});
       var sunsetval = sunset.getHours()*100+sunset.getMinutes();
-//      console.log('sunset: '+sunsetval);
+      //console.log('sunset: '+sunsetval);
 
       if (dval >= sunriseval && dval <= sunsetval ){
           console.log('The sun is out\n');
@@ -149,18 +149,18 @@
        socket.emit('Zone2init', {'Zone2init': Zone2.readSync()});
        socket.emit('Zone3init', {'Zone3init': Zone3.readSync()});
        socket.emit('Zone4init', {'Zone4init': Zone4.readSync()});
-//       socket.emit('Zone5init', {'Zone5init': Zone5.readSync()});
-//       socket.emit('Zone6init', {'Zone6init': Zone6.readSync()});
-//       socket.emit('Zone7init', {'Zone7init': Zone7.readSync()});
-//       socket.emit('Zone8init', {'Zone8init': Zone8.readSync()});
-//       socket.emit('Zone9init', {'Zone9init': Zone9.readSync()});
-//       socket.emit('Zone10init', {'Zone10init': Zone10.readSync()});
-//       socket.emit('Zone11init', {'Zone11init': Zone11.readSync()});
-//       socket.emit('Zone12init', {'Zone12init': Zone12.readSync()});
-//       socket.emit('Zone13init', {'Zone13init': Zone13.readSync()});
-//       socket.emit('Zone14init', {'Zone14init': Zone14.readSync()});
-//       socket.emit('Zone15init', {'Zone15init': Zone15.readSync()});
-//       socket.emit('Zone16init', {'Zone16init': Zone16.readSync()});
+       socket.emit('Zone5init', {'Zone5init': Zone5.readSync()});
+       socket.emit('Zone6init', {'Zone6init': Zone6.readSync()});
+       socket.emit('Zone7init', {'Zone7init': Zone7.readSync()});
+       socket.emit('Zone8init', {'Zone8init': Zone8.readSync()});
+       socket.emit('Zone9init', {'Zone9init': Zone9.readSync()});
+       socket.emit('Zone10init', {'Zone10init': Zone10.readSync()});
+       socket.emit('Zone11init', {'Zone11init': Zone11.readSync()});
+       socket.emit('Zone12init', {'Zone12init': Zone12.readSync()});
+       socket.emit('Zone13init', {'Zone13init': Zone13.readSync()});
+       socket.emit('Zone14init', {'Zone14init': Zone14.readSync()});
+       socket.emit('Zone15init', {'Zone15init': Zone15.readSync()});
+       socket.emit('Zone16init', {'Zone16init': Zone16.readSync()});
 
      },5000);
 
